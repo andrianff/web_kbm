@@ -22,5 +22,5 @@ func main() {
 	}
 
 	log.Printf("🏠 KBM - Kos Bu Mary Backend running on :%s\n", port)
-	r.Run(":" + port)
+	r.Run("0.0.0.0:" + port)
 }

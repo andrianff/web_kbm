@@ -1,0 +1,16 @@
+# Environment files (berisi credentials)
+.env
+
+# Backend binaries
+backend/app
+backend/kbm-backend.exe
+backend/kbm.db
+
+# Frontend
+frontend/node_modules/
+frontend/dist/
+frontend/*.log
+
+# OS
+.DS_Store
+Thumbs.db

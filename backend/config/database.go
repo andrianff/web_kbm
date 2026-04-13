@@ -4,6 +4,7 @@ import (
 	"log"
 	"os"
 	"time"
+	_ "time/tzdata"
 
 	"github.com/joho/godotenv"
 	"golang.org/x/crypto/bcrypt"

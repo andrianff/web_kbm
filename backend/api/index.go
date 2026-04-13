@@ -3,6 +3,7 @@ package handler
 import (
 	"net/http"
 	"sync"
+	_ "time/tzdata"
 
 	"github.com/gin-gonic/gin"
 

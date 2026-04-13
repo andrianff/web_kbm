@@ -8,6 +8,7 @@ import (
 	"github.com/gin-contrib/cors"
 	"github.com/gin-gonic/gin"
 
+	"kbm-backend/config"
 	"kbm-backend/handlers"
 	"kbm-backend/middleware"
 )
@@ -32,17 +33,37 @@ func SetupRouter() *gin.Engine {
 		MaxAge:           12 * time.Hour,
 	}))
 
-	// Root status
+	// Root status - simple health check
 	r.GET("/", func(c *gin.Context) {
 		c.JSON(200, gin.H{
-			"status": "Online",
+			"status":  "Online",
 			"message": "KBM Kos Management API is active 🏠",
-			"docs": "/api",
+			"docs":    "/api",
 		})
 	})
 
 	// Definition of all routes
 	registerRoutes := func(rg *gin.RouterGroup) {
+		// Status check
+		rg.GET("/", func(c *gin.Context) {
+			c.JSON(200, gin.H{
+				"message": "KBM API is running smoothly 🚀",
+				"path":    c.Request.URL.Path,
+				"status":  "Online",
+			})
+		})
+
+		// DB Connection Test
+		rg.GET("/db-test", func(c *gin.Context) {
+			var result int
+			err := config.DB.Raw("SELECT 1").Scan(&result).Error
+			if err != nil {
+				c.JSON(500, gin.H{"error": "Database disconnected ❌", "details": err.Error()})
+				return
+			}
+			c.JSON(200, gin.H{"message": "Database connected successfully! ✅", "value": result})
+		})
+
 		// Public routes
 		auth := rg.Group("/auth")
 		{
@@ -126,8 +147,7 @@ func SetupRouter() *gin.Engine {
 		}
 	}
 
-	// Register to both root and /api for maximum compatibility
-	registerRoutes(r.Group("/"))
+	// Register routes only under /api to avoid route conflicts
 	registerRoutes(r.Group("/api"))
 
 	return r
