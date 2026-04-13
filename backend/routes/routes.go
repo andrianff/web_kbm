@@ -32,6 +32,9 @@ func SetupRouter() *gin.Engine {
 	// Public routes
 	api := r.Group("/api")
 	{
+		api.GET("/", func(c *gin.Context) {
+			c.JSON(200, gin.H{"message": "KBM API is running smoothly 🚀", "database": "connected"})
+		})
 		auth := api.Group("/auth")
 		{
 			auth.POST("/login", handlers.Login)
