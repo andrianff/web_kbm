@@ -38,7 +38,14 @@ func InitDatabase() {
 
 	log.Println("✅ Berhasil koneksi ke database.")
 
-	// Auto migrate
+	// Skip migration & seeding di Vercel agar cold start tidak timeout (>30s)
+	// Database TiDB sudah punya schema dari migrasi pertama
+	if os.Getenv("VERCEL") == "1" {
+		log.Println("⚡ Running on Vercel — skipping migration & seeding.")
+		return
+	}
+
+	// Auto migrate (hanya untuk local development)
 	err = DB.AutoMigrate(
 		&models.User{},
 		&models.Ruangan{},
