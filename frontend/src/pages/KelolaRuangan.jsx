@@ -132,11 +132,11 @@ export default function KelolaRuangan() {
               <tbody>
                 {ruangan.map(r => (
                   <tr key={r.id}>
-                    <td style={{ fontWeight: 600, color: 'var(--text-primary)' }}>{r.nama}</td>
-                    <td>{r.kapasitas}</td>
-                    <td>{r.deskripsi || '-'}</td>
-                    <td><StatusBadge status={r.status} /></td>
-                    <td>
+                    <td data-label="Nama" style={{ fontWeight: 600, color: 'var(--text-primary)' }}>{r.nama}</td>
+                    <td data-label="Kapasitas">{r.kapasitas}</td>
+                    <td data-label="Deskripsi">{r.deskripsi || '-'}</td>
+                    <td data-label="Status"><StatusBadge status={r.status} /></td>
+                    <td data-label="Aksi">
                       <div className="flex gap-2">
                         <button className="btn btn-sm btn-primary" onClick={() => openEdit(r)}>✏️ Edit</button>
                         <button className="btn btn-sm btn-danger" onClick={() => handleDelete(r.id)}>🗑️ Hapus</button>

@@ -109,17 +109,17 @@ export default function LaporanKerusakan() {
               <tbody>
                 {laporan.map(l => (
                   <tr key={l.id}>
-                    {isAdmin && <td style={{color: 'var(--text-primary)'}}>{l.user?.nama}</td>}
-                    <td style={{color: 'var(--text-primary)', fontWeight: 500}}>{l.judul}</td>
-                    <td>{l.lokasi || '-'}</td>
-                    <td><StatusBadge status={l.prioritas} /></td>
-                    <td><StatusBadge status={l.status} /></td>
-                    <td style={{maxWidth: 200, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap'}} title={l.tanggapan_admin}>
+                    {isAdmin && <td data-label="Pelapor" style={{color: 'var(--text-primary)'}}>{l.user?.nama}</td>}
+                    <td data-label="Judul" style={{color: 'var(--text-primary)', fontWeight: 500}}>{l.judul}</td>
+                    <td data-label="Lokasi">{l.lokasi || '-'}</td>
+                    <td data-label="Prioritas"><StatusBadge status={l.prioritas} /></td>
+                    <td data-label="Status"><StatusBadge status={l.status} /></td>
+                    <td data-label="Tanggapan" style={{maxWidth: 200, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap'}} title={l.tanggapan_admin}>
                       {l.tanggapan_admin || '-'}
                     </td>
-                    <td>{new Date(l.created_at).toLocaleDateString('id-ID')}</td>
+                    <td data-label="Tanggal">{new Date(l.created_at).toLocaleDateString('id-ID')}</td>
                     {isAdmin && (
-                      <td>
+                      <td data-label="Aksi">
                         {l.status !== 'selesai' && (
                           <button 
                             className="btn btn-sm btn-primary" 

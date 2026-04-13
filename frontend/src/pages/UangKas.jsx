@@ -205,12 +205,12 @@ export default function UangKas() {
                 <tbody>
                   {iuran.map(i => (
                     <tr key={i.id}>
-                      {isAdmin && <td style={{color:'var(--text-primary)'}}>{i.user?.nama}</td>}
-                      <td>{i.bulan}</td>
-                      <td style={{fontWeight:600, color:'var(--text-primary)'}}>Rp {parseFloat(i.jumlah).toLocaleString('id-ID')}</td>
-                      <td><StatusBadge status={i.status} /></td>
-                      <td>{i.tanggal_bayar || '-'}</td>
-                      <td>
+                      {isAdmin && <td data-label="Penghuni" style={{color:'var(--text-primary)'}}>{i.user?.nama}</td>}
+                      <td data-label="Bulan">{i.bulan}</td>
+                      <td data-label="Jumlah" style={{fontWeight:600, color:'var(--text-primary)'}}>Rp {parseFloat(i.jumlah).toLocaleString('id-ID')}</td>
+                      <td data-label="Status"><StatusBadge status={i.status} /></td>
+                      <td data-label="Tgl Bayar">{i.tanggal_bayar || '-'}</td>
+                      <td data-label="Aksi">
                         {!isAdmin && i.status === 'belum_bayar' && (
                           <button className="btn btn-sm btn-success" onClick={() => handleBayarIuran(i.id)}>💳 Konfirmasi Bayar</button>
                         )}
@@ -255,17 +255,17 @@ export default function UangKas() {
                 <tbody>
                   {transaksi.map(t => (
                     <tr key={t.id}>
-                      <td>{t.tanggal}</td>
-                      <td>
+                      <td data-label="Tanggal">{t.tanggal}</td>
+                      <td data-label="Tipe">
                         <span className={`badge ${t.tipe === 'pemasukan' ? 'badge-success' : 'badge-danger'}`}>
                           {t.tipe === 'pemasukan' ? '↑ Masukan' : '↓ Pengeluaran'}
                         </span>
                       </td>
-                      <td style={{textTransform:'capitalize'}}>{t.kategori?.replace('_', ' ') || '-'}</td>
-                      <td style={{fontWeight:600, color: t.tipe === 'pemasukan' ? '#34d399' : '#f87171'}}>
+                      <td data-label="Kategori" style={{textTransform:'capitalize'}}>{t.kategori?.replace('_', ' ') || '-'}</td>
+                      <td data-label="Jumlah" style={{fontWeight:600, color: t.tipe === 'pemasukan' ? '#34d399' : '#f87171'}}>
                         Rp {parseFloat(t.jumlah).toLocaleString('id-ID')}
                       </td>
-                      <td>{t.keterangan || '-'}</td>
+                      <td data-label="Keterangan">{t.keterangan || '-'}</td>
                     </tr>
                   ))}
                 </tbody>

@@ -132,11 +132,11 @@ export default function KelolaFasilitas() {
               <tbody>
                 {fasilitas.map(f => (
                   <tr key={f.id}>
-                    <td style={{ fontWeight: 600, color: 'var(--text-primary)' }}>{f.nama}</td>
-                    <td style={{ fontWeight: 600, color: 'var(--color-info)' }}>{f.jumlah_tersedia} Unit</td>
-                    <td>{f.deskripsi || '-'}</td>
-                    <td><StatusBadge status={f.status} /></td>
-                    <td>
+                    <td data-label="Nama" style={{ fontWeight: 600, color: 'var(--text-primary)' }}>{f.nama}</td>
+                    <td data-label="Jumlah" style={{ fontWeight: 600, color: 'var(--color-info)' }}>{f.jumlah_tersedia} Unit</td>
+                    <td data-label="Deskripsi">{f.deskripsi || '-'}</td>
+                    <td data-label="Status"><StatusBadge status={f.status} /></td>
+                    <td data-label="Aksi">
                       <div className="flex gap-2">
                         <button className="btn btn-sm btn-primary" onClick={() => openEdit(f)}>✏️ Edit</button>
                         <button className="btn btn-sm btn-danger" onClick={() => handleDelete(f.id)}>🗑️ Hapus</button>

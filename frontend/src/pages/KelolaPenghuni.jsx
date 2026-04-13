@@ -118,13 +118,13 @@ export default function KelolaPenghuni() {
               <tbody>
                 {penghuni.map(p => (
                   <tr key={p.id}>
-                    <td><span className="badge badge-default">{p.username}</span></td>
-                    <td style={{ fontWeight: 600, color: 'var(--text-white)' }}>{p.nama}</td>
-                    <td style={{ fontWeight: 700, color: 'var(--color-primary)' }}>{p.no_kamar || '-'}</td>
-                    <td>{p.no_hp || '-'}</td>
-                    <td>{p.email || '-'}</td>
-                    <td>{new Date(p.created_at).toLocaleDateString('id-ID')}</td>
-                    <td>
+                    <td data-label="Username"><span className="badge badge-default">{p.username}</span></td>
+                    <td data-label="Nama" style={{ fontWeight: 600, color: 'var(--text-white)' }}>{p.nama}</td>
+                    <td data-label="No. Kamar" style={{ fontWeight: 700, color: 'var(--color-primary)' }}>{p.no_kamar || '-'}</td>
+                    <td data-label="No. HP">{p.no_hp || '-'}</td>
+                    <td data-label="Email">{p.email || '-'}</td>
+                    <td data-label="Bergabung">{new Date(p.created_at).toLocaleDateString('id-ID')}</td>
+                    <td data-label="Aksi">
                       <div className="flex gap-2">
                         <button className="btn btn-sm btn-primary" onClick={() => openEdit(p)}>✏️ Edit</button>
                         <button className="btn btn-sm btn-danger" onClick={() => handleDelete(p.id)}>🗑️ Kick</button>

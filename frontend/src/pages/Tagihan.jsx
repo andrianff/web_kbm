@@ -153,18 +153,18 @@ export default function Tagihan() {
               <tbody>
                 {tagihan.map(t => (
                   <tr key={t.id}>
-                    {isAdmin && <td style={{ color: 'var(--text-primary)' }}>{t.user?.nama}</td>}
-                    <td>{t.bulan}</td>
-                    <td style={{ textTransform: 'capitalize', color: 'var(--text-primary)', fontWeight: 500 }}>
+                    {isAdmin && <td data-label="Penghuni" style={{ color: 'var(--text-primary)' }}>{t.user?.nama}</td>}
+                    <td data-label="Bulan">{t.bulan}</td>
+                    <td data-label="Jenis" style={{ textTransform: 'capitalize', color: 'var(--text-primary)', fontWeight: 500 }}>
                       {t.jenis}
                       {t.keterangan && <div style={{ fontSize: 11, color: 'var(--text-muted)' }}>{t.keterangan}</div>}
                     </td>
-                    <td style={{ fontWeight: 600, color: 'var(--text-primary)' }}>
+                    <td data-label="Jumlah" style={{ fontWeight: 600, color: 'var(--text-primary)' }}>
                       Rp {parseFloat(t.jumlah).toLocaleString('id-ID')}
                     </td>
-                    <td>{t.jatuh_tempo || '-'}</td>
-                    <td><StatusBadge status={t.status} /></td>
-                    <td>
+                    <td data-label="Jatuh Tempo">{t.jatuh_tempo || '-'}</td>
+                    <td data-label="Status"><StatusBadge status={t.status} /></td>
+                    <td data-label="Aksi">
                       <div className="flex gap-2">
                         {!isAdmin && t.status === 'belum_bayar' && (
                           <button className="btn btn-sm btn-success" onClick={() => handleBayar(t.id)}>
