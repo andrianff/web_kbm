@@ -2,8 +2,10 @@ package config
 
 import (
 	"log"
+	"os"
 	"time"
 
+	"github.com/joho/godotenv"
 	"golang.org/x/crypto/bcrypt"
 	"gorm.io/driver/mysql"
 	"gorm.io/gorm"
@@ -14,15 +16,22 @@ import (
 var DB *gorm.DB
 
 func InitDatabase() {
+	// Load .env file for local development
+	_ = godotenv.Load()
+
 	var err error
 	
-	// Konfigurasi koneksi MySQL Laragon
-	// DSN (Data Source Name): username:password@tcp(host:port)/dbname
-	dsn := "root:@tcp(127.0.0.1:3306)/kbm?charset=utf8mb4&parseTime=True&loc=Local"
+	// Gunakan DB_DSN dari environment variable
+	dsn := os.Getenv("DB_DSN")
+	if dsn == "" {
+		// Fallback ke Laragon lokal jika tidak ada env var
+		dsn = "root:@tcp(127.0.0.1:3306)/kbm?charset=utf8mb4&parseTime=True&loc=Local"
+		log.Println("⚠️  DB_DSN tidak ditemukan, menggunakan konfigurasi lokal Laragon.")
+	}
 	
 	DB, err = gorm.Open(mysql.Open(dsn), &gorm.Config{})
 	if err != nil {
-		log.Fatal("Gagal koneksi ke MySQL Laragon. Pastikan MySQL menyala dan database 'kbm' sudah dibuat: ", err)
+		log.Fatal("❌ Gagal koneksi ke database. Pastikan MySQL menyala dan DSN benar: ", err)
 	}
 
 	// Auto migrate

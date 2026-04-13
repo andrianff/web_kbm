@@ -2,6 +2,8 @@ package main
 
 import (
 	"log"
+	"os"
+	"strings"
 
 	"github.com/gin-contrib/cors"
 	"github.com/gin-gonic/gin"
@@ -19,8 +21,14 @@ func main() {
 	r := gin.Default()
 
 	// CORS
+	allowedOrigins := os.Getenv("ALLOWED_ORIGINS")
+	allowList := []string{"http://localhost:5173", "http://localhost:5174", "http://localhost:3000"}
+	if allowedOrigins != "" {
+		allowList = strings.Split(allowedOrigins, ",")
+	}
+
 	r.Use(cors.New(cors.Config{
-		AllowOrigins:     []string{"http://localhost:5173", "http://localhost:5174", "http://localhost:3000"},
+		AllowOrigins:     allowList,
 		AllowMethods:     []string{"GET", "POST", "PUT", "DELETE", "OPTIONS"},
 		AllowHeaders:     []string{"Origin", "Content-Type", "Authorization"},
 		AllowCredentials: true,
@@ -121,6 +129,12 @@ func main() {
 		admin.DELETE("pengumuman/:id", handlers.DeletePengumuman)
 	}
 
-	log.Println("🏠 KBM - Kos Bu Mary Backend running on :8080")
-	r.Run(":8080")
+	// Get port from env
+	port := os.Getenv("PORT")
+	if port == "" {
+		port = "8080"
+	}
+
+	log.Printf("🏠 KBM - Kos Bu Mary Backend running on :%s\n", port)
+	r.Run(":" + port)
 }
