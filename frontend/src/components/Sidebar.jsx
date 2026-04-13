@@ -128,21 +128,22 @@ export default function Sidebar({ isOpen, onToggle }) {
                   <span>Profil</span>
                 </NavLink>
               </li>
-              <li>
-                <button
-                  className="nav-item nav-item-btn"
-                  onClick={handleLogout}
-                  aria-label="Keluar dari akun"
-                >
-                  <span className="nav-icon" aria-hidden="true">🚪</span>
-                  <span>Logout</span>
-                </button>
-              </li>
             </ul>
           </div>
         </nav>
 
         <div className="sidebar-footer">
+          <button
+            className="logout-button"
+            onClick={handleLogout}
+            aria-label="Keluar dari akun"
+          >
+            <span className="nav-icon" aria-hidden="true">🚪</span>
+            <span>Keluar Akun (Logout)</span>
+          </button>
+
+          <div className="sidebar-separator"></div>
+
           <div className="sidebar-user" aria-label={`Akun: ${user?.nama}`}>
             <div className="sidebar-avatar" aria-hidden="true">
               {user?.nama?.charAt(0)?.toUpperCase() || 'U'}

@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { createPortal } from 'react-dom';
 
 /**
  * ConfirmDialog - Custom confirmation dialog replacing window.confirm()
@@ -11,7 +12,7 @@ export default function ConfirmDialog({ isOpen, onConfirm, onCancel, title, mess
     if (e.key === 'Escape') onCancel();
   };
 
-  return (
+  const confirmRender = (
     <div className="modal-overlay" onClick={onCancel} onKeyDown={handleKeyDown} role="dialog" aria-modal="true" aria-labelledby="confirm-title" aria-describedby="confirm-message">
       <div className="modal confirm-dialog" onClick={e => e.stopPropagation()} style={{ maxWidth: 420 }}>
         <div className="modal-body" style={{ textAlign: 'center', padding: '32px 24px' }}>
@@ -43,6 +44,8 @@ export default function ConfirmDialog({ isOpen, onConfirm, onCancel, title, mess
       </div>
     </div>
   );
+
+  return document.body ? createPortal(confirmRender, document.body) : null;
 }
 
 /**

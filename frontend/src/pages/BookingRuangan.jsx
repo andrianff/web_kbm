@@ -129,14 +129,14 @@ export default function BookingRuangan() {
               <tbody>
                 {bookings.map(b => (
                   <tr key={b.id}>
-                    {isAdmin && <td style={{ color: 'var(--text-primary)' }}>{b.user?.nama}</td>}
-                    <td style={{ color: 'var(--text-primary)', fontWeight: 500 }}>{b.ruangan?.nama}</td>
-                    <td>{b.tanggal}</td>
-                    <td><span className="badge badge-cyan">{b.slot_waktu}</span></td>
-                    <td>{b.keperluan || '-'}</td>
-                    <td><StatusBadge status={b.status} /></td>
-                    <td>{b.catatan_admin || '-'}</td>
-                    <td>
+                    {isAdmin && <td data-label="Penghuni" style={{ color: 'var(--text-primary)' }}>{b.user?.nama}</td>}
+                    <td data-label="Ruangan" style={{ color: 'var(--text-primary)', fontWeight: 500 }}>{b.ruangan?.nama}</td>
+                    <td data-label="Tanggal">{b.tanggal}</td>
+                    <td data-label="Slot Waktu"><span className="badge badge-cyan">{b.slot_waktu}</span></td>
+                    <td data-label="Keperluan">{b.keperluan || '-'}</td>
+                    <td data-label="Status"><StatusBadge status={b.status} /></td>
+                    <td data-label="Catatan">{b.catatan_admin || '-'}</td>
+                    <td data-label="Aksi">
                       <div className="flex gap-2">
                         {isAdmin && b.status === 'pending' && (
                           <button className="btn btn-sm btn-success" aria-label={`Proses booking ${b.ruangan?.nama}`} onClick={() => {

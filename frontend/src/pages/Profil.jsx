@@ -86,7 +86,7 @@ export default function Profil() {
         <h2>👤 Profil & Privasi Saya</h2>
       </div>
 
-      <div style={{ display: 'grid', gridTemplateColumns: 'minmax(0, 1.5fr) minmax(0, 1fr)', gap: 24, alignItems: 'start' }}>
+      <div className="profile-grid" style={{ display: 'grid', gridTemplateColumns: '1.5fr 1fr', gap: 24, alignItems: 'start' }}>
         
         {/* Profile Card */}
         <div className="card">

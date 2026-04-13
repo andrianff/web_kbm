@@ -1,4 +1,5 @@
 import { useEffect, useRef } from 'react';
+import { createPortal } from 'react-dom';
 
 /**
  * Modal - Accessible modal with focus trap, Escape to close, and ARIA attributes
@@ -53,7 +54,7 @@ export default function Modal({ isOpen, onClose, title, children, footer, size =
 
   const sizeClass = size === 'large' ? 'modal-large' : size === 'small' ? 'modal-small' : '';
 
-  return (
+  const modalRender = (
     <div
       className="modal-overlay"
       onClick={onClose}
@@ -91,4 +92,6 @@ export default function Modal({ isOpen, onClose, title, children, footer, size =
       </div>
     </div>
   );
+
+  return document.body ? createPortal(modalRender, document.body) : null;
 }

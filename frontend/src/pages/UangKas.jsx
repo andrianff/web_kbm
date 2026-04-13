@@ -137,27 +137,30 @@ export default function UangKas() {
       </div>
 
       <div className="stats-grid kas-summary">
-        <div className="stat-card green" style={{ display: 'block', flexDirection: 'column' }}>
-          <div style={{ color: 'var(--text-secondary)', fontSize: 13, marginBottom: 4 }}>Total Pemasukan</div>
-          <div style={{ fontSize: 28, fontWeight: 700, color: 'var(--text-white)' }}>
-            Rp {saldo.total_pemasukan?.toLocaleString('id-ID')}
+        <div className="stat-card green">
+          <div className="stat-icon green">📈</div>
+          <div className="stat-info stat-money">
+            <h3>Rp {saldo.total_pemasukan?.toLocaleString('id-ID') || 0}</h3>
+            <p>Total Pemasukan</p>
           </div>
         </div>
-        <div className="stat-card red" style={{ display: 'block', flexDirection: 'column' }}>
-          <div style={{ color: 'var(--text-secondary)', fontSize: 13, marginBottom: 4 }}>Total Pengeluaran</div>
-          <div style={{ fontSize: 28, fontWeight: 700, color: 'var(--text-white)' }}>
-            Rp {saldo.total_pengeluaran?.toLocaleString('id-ID')}
+        <div className="stat-card red">
+          <div className="stat-icon red">📉</div>
+          <div className="stat-info stat-money">
+            <h3>Rp {saldo.total_pengeluaran?.toLocaleString('id-ID') || 0}</h3>
+            <p>Total Pengeluaran</p>
           </div>
         </div>
-        <div className="stat-card blue" style={{ display: 'block', flexDirection: 'column' }}>
-          <div style={{ color: 'var(--text-secondary)', fontSize: 13, marginBottom: 4 }}>Saldo Saat Ini</div>
-          <div style={{ fontSize: 28, fontWeight: 700, color: '#60a5fa' }}>
-            Rp {saldo.saldo?.toLocaleString('id-ID')}
+        <div className="stat-card blue">
+          <div className="stat-icon blue">💵</div>
+          <div className="stat-info stat-money">
+            <h3>Rp {saldo.saldo?.toLocaleString('id-ID') || 0}</h3>
+            <p>Saldo Saat Ini</p>
           </div>
         </div>
       </div>
 
-      <div className="filter-bar" style={{ display: 'flex', gap: '10px', marginBottom: '20px' }} role="tablist">
+      <div className="filter-bar" role="tablist">
         <button 
           role="tab"
           aria-selected={tab === 'iuran'}
