@@ -1,73 +1,67 @@
-# 🚀 Panduan Deployment Gratis KBM (Kos Bu Mary)
+# 🚀 Panduan Deployment Gratis KBM (Kos Bu Mary) - Vercel Edition
 
-Ikuti langkah-langkah ini untuk memindahkan project Anda dari komputer lokal ke internet sehingga bisa diakses oleh siapa saja.
+Ikuti langkah-langkah ini untuk men-deploy project Anda secara **100% GRATIS dan TANPA KARTU KREDIT**.
 
 ---
 
 ## 🏗️ Tahap 1: Setup Database (TiDB Cloud)
-TiDB Cloud menyediakan MySQL-compatible serverless database secara gratis.
+TiDB Cloud menyediakan MySQL serverless secara gratis tanpa kartu kredit.
 
 1.  Daftar di [TiDB Cloud](https://pingcap.com/products/tidb-cloud/).
 2.  Buat cluster baru (pilih **Serverless Tier** - Free).
 3.  Pilih **Connect** -> **Standard Connection**.
-4.  Catat detail koneksi (Host, User, Password, Port).
-5.  Database Anda kemungkinan besar bernama `test` secara default.
-6.  **DSN Anda nanti akan berbentuk seperti ini:**
-    `user:password@tcp(host:4000)/test?charset=utf8mb4&parseTime=True&loc=Local&tls=true`
-    *(Ingat: TiDB menggunakan port **4000**, bukan 3306)*.
+4.  Dapatkan detailnya (Host, User, Password).
+5.  **DSN Anda nanti akan berbentuk seperti ini (WAJIB ADA `tls=skip-verify`):**
+    `user:password@tcp(host:4000)/test?charset=utf8mb4&parseTime=True&loc=Local&tls=skip-verify`
+    *(Ingat: TiDB menggunakan port **4000**)*.
 
 ---
 
-## ⚙️ Tahap 2: Setup Backend (Render)
-Render akan menghosting kode Go Anda.
+## ⚙️ Tahap 2: Setup Backend (Vercel)
+Kita akan menggunakan Vercel untuk menghosting Backend juga agar gratis selamanya tanpa kartu kredit.
 
-1.  Push kode Anda ke GitHub (Anda sudah melakukan ini, pastikan branch `main` terbaru).
-2.  Daftar di [Render.com](https://render.com/).
-3.  Klik **New** -> **Web Service**.
-4.  Hubungkan akun GitHub Anda dan pilih repository `web_kbm`.
-5.  **Konfigurasi Service:**
-    - **Name:** `kbm-backend`
-    - **Root Directory:** `backend` (PENTING)
-    - **Environment:** `Go`
-    - **Build Command:** `go build -o app main.go`
-    - **Start Command:** `./app`
-6.  Klik **Advanced** -> **Add Environment Variable**:
-    - `DB_DSN`: (Masukkan DSN dari TiDB Cloud tadi)
-    - `ALLOWED_ORIGINS`: (Biarkan kosong dulu, nanti diisi URL Vercel)
-7.  Deploy! Setelah sukses, Anda akan mendapatkan URL seperti `https://kbm-backend.onrender.com`.
+1.  Buka Dashboard [Vercel](https://vercel.com).
+2.  Klik **Add New** -> **Project**.
+3.  Pilih repository **`web_kbm`** Anda.
+4.  **Konfigurasi Project Backend:**
+    - **Project Name:** `kbm-backend` (atau nama lain)
+    - **Root Directory:** Pilih folder **`backend`**.
+    - **Framework Preset:** Biarkan `Other`.
+5.  Buka bagian **Environment Variables** dan tambahkan:
+    - `DB_DSN`: (Isi dengan DSN dari TiDB tadi)
+6.  Klik **Deploy**.
+7.  Setelah sukses, Anda akan mendapatkan URL seperti `https://kbm-backend.vercel.app`.
 
 ---
 
 ## 🎨 Tahap 3: Setup Frontend (Vercel)
-Vercel akan menghosting tampilan React Anda.
+Sama seperti backend, namun arahkan ke folder frontend.
 
-1.  Daftar di [Vercel](https://vercel.com/).
-2.  Klik **Add New** -> **Project**.
-3.  Pilih repository `web_kbm`.
-4.  **Konfigurasi Project:**
-    - **Root Directory:** `frontend` (PENTING)
-    - **Build Command:** `npm run build`
-    - **Output Directory:** `dist`
-5.  Buka bagian **Environment Variables** dan tambahkan:
-    - `VITE_API_URL`: `https://kbm-backend.onrender.com/api` (URL Render Anda + /api)
-6.  Klik **Deploy**.
-7.  Anda akan mendapatkan URL seperti `https://web-kbm.vercel.app`.
+1.  Klik **Add New** -> **Project** lagi di Vercel.
+2.  Pilih repository **`web_kbm`** yang sama.
+3.  **Konfigurasi Project Frontend:**
+    - **Project Name:** `kbm-kos` (atau nama lain)
+    - **Root Directory:** Pilih folder **`frontend`**.
+    - **Framework Preset:** `Vite`.
+4.  Buka bagian **Environment Variables** dan tambahkan:
+    - `VITE_API_URL`: `https://kbm-backend.vercel.app/api` (URL Backend Anda tadi + /api)
+5.  Klik **Deploy**.
 
 ---
 
 ## 🔗 Tahap Akhir: Hubungkan Keduanya
-Agar Backend mau menerima data dari Frontend:
+Agar Backend menerima data dari Frontend, tambahkan variabel keamanan ini:
 
-1.  Kembali ke Dashboard **Render (Backend)**.
-2.  Masuk ke **Environment Variables**.
-3.  Update variable `ALLOWED_ORIGINS` dengan URL Vercel Anda tadi.
-    - Contoh: `https://web-kbm.vercel.app`
-4.  Save dan Render akan melakukan redeploy otomatis.
+1.  Kembali ke Project **Backend** di Vercel.
+2.  Buka **Settings** -> **Environment Variables**.
+3.  Tambahkan:
+    - `ALLOWED_ORIGINS`: `https://kbm-kos.vercel.app` (Isi dengan URL Frontend Anda)
+4.  Redeploy Project Backend agar variabel terbaca.
 
 ---
 
 ### 🎉 Selesai!
-Sekarang Portal Kos KBM Anda sudah online sepenuhnya secara gratis!
+Sekarang Portal Kos KBM Anda sudah online sepenuhnya di Vercel!
 
 > [!TIP]
 > **Penting untuk Lokal:** Sekarang di laptop Anda, jangan lupa buat file `.env` di dalam folder `backend/` dan `frontend/` (copy dari `.env.example`) agar project tetap bisa jalan di Laragon seperti biasa.

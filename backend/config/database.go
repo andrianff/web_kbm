@@ -31,8 +31,11 @@ func InitDatabase() {
 	
 	DB, err = gorm.Open(mysql.Open(dsn), &gorm.Config{})
 	if err != nil {
-		log.Fatal("❌ Gagal koneksi ke database. Pastikan MySQL menyala dan DSN benar: ", err)
+		log.Println("❌ Gagal koneksi ke database. Pastikan MySQL menyala dan DSN benar: ", err)
+		return // Jangan Fatal agar Vercel tidak crash seketika
 	}
+
+	log.Println("✅ Berhasil koneksi ke database.")
 
 	// Auto migrate
 	err = DB.AutoMigrate(
@@ -48,7 +51,8 @@ func InitDatabase() {
 		&models.Pengumuman{},
 	)
 	if err != nil {
-		log.Fatal("Gagal migrasi database: ", err)
+		log.Println("❌ Gagal migrasi database: ", err)
+		return
 	}
 
 	seedData()
