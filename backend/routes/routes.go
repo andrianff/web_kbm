@@ -29,6 +29,15 @@ func SetupRouter() *gin.Engine {
 		AllowCredentials: true,
 	}))
 
+	// Root status
+	r.GET("/", func(c *gin.Context) {
+		c.JSON(200, gin.H{
+			"status": "Online",
+			"message": "KBM Kos Management API is active 🏠",
+			"docs": "/api",
+		})
+	})
+
 	// Public routes
 	api := r.Group("/api")
 	{
